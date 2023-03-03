@@ -37,6 +37,16 @@ cd ~/rf_ws
 catkin_make
 ```
 
+## Add objects to gazebo
+
+In `baxter.urdf.xacro` add:
+
+```xml
+ <xacro:include filename="$(find baxter_sim_examples)/models/cafe_table/cafe_table.xacro" />
+```
+
+
+
 ## Launch
 
 ### terminal 1
@@ -55,11 +65,11 @@ rosrun rviz rviz
 ### terminal 4
 
 ```bash
-rosrun spawn_chessboard.py
+rosrun chess_pkg spawn_chessboard.py
 ```
 
 ### terminal 5
 
 ```bash
-rosrun delete_chess_game.py
+rosrun chess_pkg delete_chess_game.py
 ```
