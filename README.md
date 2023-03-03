@@ -49,11 +49,6 @@ roslaunch baxter_gazebo baxter_world.launch
 
 ```bash
 rosrun baxter_tools enable_robot.py -e
-```
-
-### terminal 3
-
-```bash
 rosrun rviz rviz
 ```
 
