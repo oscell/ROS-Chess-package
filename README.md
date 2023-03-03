@@ -1,6 +1,6 @@
 # ROS-Chess-package
 
-Robotics foundations assessment
+This is a robotics foundations coursework. The files can be found [here](https://moodle.gla.ac.uk/course/view.php?id=34588)
 
 - [ ] Add a assesment package called "chess"
 
@@ -18,4 +18,3 @@ cp ~/Desktop/coursework/spawn_chessboard.py ~/rf_ws/src/chess_pkg/src/spawn_ches
 ```bash
 cp ~Desktop/coursework/delete_chessgame.py ~/rf_ws/src/chess_pkg/src/delete_chessgame.py
 ```
-
