@@ -27,7 +27,7 @@ chmod +x ~/rf_ws/src/chess_pkg/src/spawn_chessboard.py
 ```
 
 ```bash
-chmod +x ~/rf_ws/src/chess_pkg/src/delete_chess_game.py
+chmod +x ~/rf_ws/src/chess_pkg/src/delete_chessgame.py
 ```
 
 ## Make it
@@ -39,14 +39,32 @@ catkin_make
 
 ## Launch
 
+### terminal 1
+
 ```bash
 roslaunch baxter_gazebo baxter_world.launch
 ```
+
+### terminal 2
 
 ```bash
 rosrun baxter_tools enable_robot.py -e
 ```
 
+### terminal 3
+
 ```bash
 rosrun rviz rviz
+```
+
+### terminal 4
+
+```bash
+rosrun spawn_chessboard.py
+```
+
+### terminal 5
+
+```bash
+rosrun delete_chess_game.py
 ```
