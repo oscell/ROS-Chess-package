@@ -64,8 +64,13 @@ cp model.urdf ~/rf_ws/src/chess_baxter/src/chessboard.xacro
 
 open the following to edit
 
-1. Replace <robot name="chessboard"> with <robot name="chessboard" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
+1. Replace 
+```xml
+<robot name="chessboard"> 
+```
+```xml
+<robot name="chessboard" xmlns:xacro="http://www.ros.org/wiki/xacro">
+```
 ## Launch
 
 ### terminal 1
