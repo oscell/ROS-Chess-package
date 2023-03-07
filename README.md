@@ -5,6 +5,12 @@ Traceback (most recent call last):
     with open(model_path + "chessboard/model.sdf", "r") as f:
 IOError: [Errno 2] No such file or directory: '/home/vagrant/rf_ws/src/chess_baxter/models/chessboard/model.sdf'
 
+## Debugging
+
+```bash
+cat /home/vagrant/rf_ws/src/chess_baxter/models/chessboard/model.sdf
+```
+
 This is a robotics foundations coursework. The files can be found [here](https://moodle.gla.ac.uk/course/view.php?id=34588)
 
 ## Create package
