@@ -93,7 +93,7 @@ code ~/ros_ws/src/baxter/baxter/baxter_common/baxter_description/urdf/baxter.urd
  
  ```xml
 <!-- Chess Board -->
-<xacro:include filename="$(find chess_baxter)/src/cafe_table.xacro" />
+<xacro:include filename="$(find chess_baxter)/src/chessboard.xacro" />
 ```
 
 ## Launch
