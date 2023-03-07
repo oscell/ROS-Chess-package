@@ -71,6 +71,18 @@ open the following to edit
 ```xml
 <robot name="chessboard" xmlns:xacro="http://www.ros.org/wiki/xacro">
 ```
+
+2. Add a joint of the chessboard such that Rviz and TF can understand where the coffee table is located in space and its place within the robot's and environment's transformation hierarchy. In here, we attach the chessboard to the world, so copy/paste the code below just before the robot closing tag in chessboard.xacro. Save the file after you finish adding the code below.
+
+```
+<joint name="cafe_table_fixed" type="fixed">
+  <origin rpy="0 0 0" xyz="1.0 0 -0.93"/>
+  <axis xyz="0 0 1"/>
+  <parent link="world"/>
+  <child link="cafe_table__link"/>
+</joint>
+```
+
 ## Launch
 
 ### terminal 1
