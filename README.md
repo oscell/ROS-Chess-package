@@ -54,6 +54,10 @@ export MESH_WORKSPACE_PATH=~/ros_ws/src
 rosrun pysdf sdf2urdf.py model.sdf model.urdf
 ```
 
+```bash
+cp model.urdf ~/rf_ws/src/lab4_pkg/src/cafe_table.xacro
+```
+
 ## Launch
 
 ### terminal 1
