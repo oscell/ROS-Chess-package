@@ -1,10 +1,4 @@
 # ROS-Chess-package
-
-Traceback (most recent call last):
-  File "/home/vagrant/rf_ws/src/chess_baxter/src/spawn_chessboard.py", line 35, in <module>
-    with open(model_path + "chessboard/model.sdf", "r") as f:
-IOError: [Errno 2] No such file or directory: '/home/vagrant/rf_ws/src/chess_baxter/models/chessboard/model.sdf'
-
 ## Debugging
 
 ```bash
