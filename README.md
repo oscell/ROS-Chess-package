@@ -48,6 +48,12 @@ In `baxter.urdf.xacro` add(but for pieces and such):
  <xacro:include filename="$(find baxter_sim_examples)/models/cafe_table/cafe_table.xacro" />
 ```
 
+```bash
+roscd baxter_sim_examples/models/cafe_table
+export MESH_WORKSPACE_PATH=~/ros_ws/src
+rosrun pysdf sdf2urdf.py model.sdf model.urdf
+```
+
 ## Launch
 
 ### terminal 1
