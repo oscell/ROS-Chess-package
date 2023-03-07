@@ -24,10 +24,12 @@ catkin_create_pkg chess_baxter rospy geometry_msgs sensor_msgs control_msgs traj
 
 ```bash
 cp ~/Desktop/coursework/spawn_chessboard.py ~/rf_ws/src/chess_baxter/src/spawn_chessboard.py
+cp ~Desktop/coursework/delete_chessgame.py ~/rf_ws/src/chess_baxter/src/delete_chessgame.py
+cp -R ~Desktop/coursework/models ~/rf_ws/src/chess_baxter
 ```
 
 ```bash
-cp ~Desktop/coursework/delete_chessgame.py ~/rf_ws/src/chess_baxter/src/delete_chessgame.py
+
 ```
 
 ## Make exectutable
