@@ -48,15 +48,23 @@ In `baxter.urdf.xacro` add(but for pieces and such):
  <xacro:include filename="$(find baxter_sim_examples)/models/cafe_table/cafe_table.xacro" />
 ```
 
+convert chesboard.sdf to urdf 
+
 ```bash
 roscd ~/rf_ws/src/chess_baxter/src/models/chessboard
 export MESH_WORKSPACE_PATH=~/ros_ws/src
 rosrun pysdf sdf2urdf.py model.sdf model.urdf
 ```
 
+then to xacro
+
 ```bash
 cp model.urdf ~/rf_ws/src/chess_baxter/src/chessboard.xacro
 ```
+
+open the following to edit
+
+1. Replace <robot name="chessboard"> with <robot name="chessboard" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 ## Launch
 
