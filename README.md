@@ -83,6 +83,19 @@ open the following to edit
 </joint>
 ```
 
+open `baxter.urdf.xacro`:
+
+```bash
+code ~/ros_ws/src/baxter/baxter/baxter_common/baxter_description/urdf/baxter.urdf.xacro
+```
+
+ and add the following just before the robot closing tag:
+ 
+ ```xml
+<!-- Coffe Table -->
+<xacro:include filename="$(find lab4_pkg)/src/cafe_table.xacro" />
+```
+
 ## Launch
 
 ### terminal 1
