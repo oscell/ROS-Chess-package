@@ -92,8 +92,8 @@ code ~/ros_ws/src/baxter/baxter/baxter_common/baxter_description/urdf/baxter.urd
  and add the following just before the robot closing tag:
  
  ```xml
-<!-- Coffe Table -->
-<xacro:include filename="$(find lab4_pkg)/src/cafe_table.xacro" />
+<!-- Chess Board -->
+<xacro:include filename="$(find chess_baxter)/src/cafe_table.xacro" />
 ```
 
 ## Launch
