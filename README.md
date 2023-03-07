@@ -55,7 +55,7 @@ rosrun pysdf sdf2urdf.py model.sdf model.urdf
 ```
 
 ```bash
-cp model.urdf ~/rf_ws/src/lab4_pkg/src/cafe_table.xacro
+cp model.urdf ~/rf_ws/src/chess_baxter/src/chessboard.xacro
 ```
 
 ## Launch
