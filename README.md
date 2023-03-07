@@ -49,7 +49,7 @@ In `baxter.urdf.xacro` add(but for pieces and such):
 ```
 
 ```bash
-roscd baxter_sim_examples/models/cafe_table
+roscd ~rf_ws/src/chess_baxter/src/models/chessboard
 export MESH_WORKSPACE_PATH=~/ros_ws/src
 rosrun pysdf sdf2urdf.py model.sdf model.urdf
 ```
