@@ -61,13 +61,18 @@ catkin_make
 
 ### Steps
 
-inspect [pick_and_place_moveit.py](file://Desktop/RFLabs/lab4/src/lab4_pkg/src/)
+inspect pick_and_place_moveit.py
 
+```sh
+cd ~/Desktop/RFLabs/lab4/src/lab4_pkg/src/
+code .
+```
 
+Inspect `load_gazebo_model` and `delete_gazebo_model`
 
-
-
-
+```sh
+Desktop/RFLabs/lab4/src/lab4_pkg/src/
+```
 
 
 
