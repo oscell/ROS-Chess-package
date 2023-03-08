@@ -1,12 +1,35 @@
 # ROS-Chess-package
-## Debugging
-
-```bash
-cat /home/vagrant/rf_ws/src/chess_baxter/models/chessboard/model.sdf
-```
 
 This is a robotics foundations coursework. The files can be found [here](https://moodle.gla.ac.uk/course/view.php?id=34588)
 
+## Launch
+
+### terminal 1
+
+```bash
+roslaunch baxter_gazebo baxter_world.launch
+```
+
+### terminal 2
+
+```bash
+rosrun baxter_tools enable_robot.py -e
+rosrun rviz rviz
+```
+
+### terminal 4
+
+```bash
+rosrun chess_baxter spawn_chessboard.py
+```
+
+### terminal 5
+
+```bash
+rosrun chess_baxter delete_chess_game.py
+```
+
+# Setup
 ## Create package
 
 ```bash
@@ -105,29 +128,3 @@ code ~/ros_ws/src/baxter/baxter/baxter_common/baxter_description/urdf/baxter.urd
 <xacro:include filename="$(find chess_baxter)/src/chessboard.xacro" />
 ```
 
-## Launch
-
-### terminal 1
-
-```bash
-roslaunch baxter_gazebo baxter_world.launch
-```
-
-### terminal 2
-
-```bash
-rosrun baxter_tools enable_robot.py -e
-rosrun rviz rviz
-```
-
-### terminal 4
-
-```bash
-rosrun chess_baxter spawn_chessboard.py
-```
-
-### terminal 5
-
-```bash
-rosrun chess_baxter delete_chess_game.py
-```
