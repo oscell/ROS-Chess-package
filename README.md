@@ -58,7 +58,6 @@ cd ~/rf_ws
 catkin_make
 ```
 
-
 ### Steps
 
 inspect pick_and_place_moveit.py
@@ -74,11 +73,30 @@ Inspect `load_gazebo_model` and `delete_gazebo_model`
 Desktop/RFLabs/lab4/src/lab4_pkg/src/
 ```
 
+Terminal 1:
 
+```sh
+roslaunch baxter_gazebo baxter_world.launch
+```
 
+Terminal 2:
 
+```sh
+rosrun baxter_tools enable_robot.py -e
+rosrun baxter_interface joint_trajectory_action_server.py
+```
 
+Terminal 3:
 
+```sh
+roslaunch baxter_moveit_config baxter_grippers.launch
+```
+
+Terminal 4:
+
+```sh
+rosrun lab4_pkg pick_and_place_moveit.py
+```
 
 <!-- 
 look at load_gazebo_models and delete_gazebo_model
@@ -98,7 +116,6 @@ roscd baxter_sim_examples/models/cafe_table
 export MESH_WORKSPACE_PATH=~/ros_ws/src
 rosrun pysdf sdf2urdf.py model.sdf model.urdf
 ```
-
 
 ```bash
 roscd ~/rf_ws/src/chess_baxter/src/models/chessboard
@@ -142,6 +159,8 @@ code ~/ros_ws/src/baxter/baxter/baxter_common/baxter_description/urdf/baxter.urd
  and add the following just before the robot closing tag:
  
  ```xml
-<!-- Chess Board -->
-<xacro:include filename="$(find chess_baxter)/src/chessboard.xacro" /> -->
-```
+Chess Board -->
+<!-- 
+<xacro:include filename="$(find chess_baxter)/src/chessboard.xacro" /> 
+``` -->
+
