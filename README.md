@@ -14,7 +14,7 @@ roslaunch baxter_gazebo baxter_world.launch
 
 ```bash
 rosrun baxter_tools enable_robot.py -e
-rosrun rviz rviz
+roslaunch baxter_moveit_config baxter_grippers.launch
 ```
 
 ### terminal 4
