@@ -59,10 +59,23 @@ catkin_make
 ```
 
 
-### Add objects to gazebo (lecture 4 and 5)
+### Steps
 
-inspect pick_and_place_moveit.py
+inspect [pick_and_place_moveit.py][file://Desktop/RFLabs/lab4/src/lab4_pkg/src/]
 
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
 look at load_gazebo_models and delete_gazebo_model
 
 In `baxter.urdf.xacro` add(but for pieces and such):
@@ -125,5 +138,5 @@ code ~/ros_ws/src/baxter/baxter/baxter_common/baxter_description/urdf/baxter.urd
  
  ```xml
 <!-- Chess Board -->
-<xacro:include filename="$(find chess_baxter)/src/chessboard.xacro" />
+<xacro:include filename="$(find chess_baxter)/src/chessboard.xacro" /> -->
 ```
