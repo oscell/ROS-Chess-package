@@ -2,8 +2,64 @@
 
 This is a robotics foundations coursework. The files can be found [here](https://moodle.gla.ac.uk/course/view.php?id=34588)
 
+## Launch
 
-## Add objects to gazebo (lecture 4 and 5)
+### terminal 1
+
+```bash
+roslaunch baxter_gazebo baxter_world.launch
+```
+
+### terminal 2
+
+```bash
+rosrun baxter_tools enable_robot.py -e
+rosrun rviz rviz
+```
+
+### terminal 4
+
+```bash
+rosrun chess_baxter spawn_chessboard.py
+```
+
+### terminal 5
+
+```bash
+rosrun chess_baxter delete_chess_game.py
+```
+
+## Create package
+
+```bash
+cd ~/rf_ws/src
+catkin_create_pkg chess_baxter rospy geometry_msgs sensor_msgs control_msgs trajectory_msgs baxter_core_msgs baxter_interface
+```
+
+### Copy nodes from courswork directory to package
+
+```bash
+cp ~/Desktop/coursework/spawn_chessboard.py ~/rf_ws/src/chess_baxter/src/spawn_chessboard.py
+cp ~/Desktop/coursework/delete_chessgame.py ~/rf_ws/src/chess_baxter/src/delete_chessgame.py
+cp -R ~/Desktop/coursework/models ~/rf_ws/src/chess_baxter
+```
+
+### Make exectutable
+
+```bash
+chmod +x ~/rf_ws/src/chess_baxter/src/spawn_chessboard.py
+chmod +x ~/rf_ws/src/chess_baxter/src/delete_chessgame.py
+```
+
+### Make it
+
+```bash
+cd ~/rf_ws
+catkin_make
+```
+
+
+### Add objects to gazebo (lecture 4 and 5)
 
 inspect pick_and_place_moveit.py
 
@@ -70,60 +126,4 @@ code ~/ros_ws/src/baxter/baxter/baxter_common/baxter_description/urdf/baxter.urd
  ```xml
 <!-- Chess Board -->
 <xacro:include filename="$(find chess_baxter)/src/chessboard.xacro" />
-```
-
-## Launch
-
-### terminal 1
-
-```bash
-roslaunch baxter_gazebo baxter_world.launch
-```
-
-### terminal 2
-
-```bash
-rosrun baxter_tools enable_robot.py -e
-rosrun rviz rviz
-```
-
-### terminal 4
-
-```bash
-rosrun chess_baxter spawn_chessboard.py
-```
-
-### terminal 5
-
-```bash
-rosrun chess_baxter delete_chess_game.py
-```
-
-## Create package
-
-```bash
-cd ~/rf_ws/src
-catkin_create_pkg chess_baxter rospy geometry_msgs sensor_msgs control_msgs trajectory_msgs baxter_core_msgs baxter_interface
-```
-
-## Copy nodes from courswork directory to package
-
-```bash
-cp ~/Desktop/coursework/spawn_chessboard.py ~/rf_ws/src/chess_baxter/src/spawn_chessboard.py
-cp ~/Desktop/coursework/delete_chessgame.py ~/rf_ws/src/chess_baxter/src/delete_chessgame.py
-cp -R ~/Desktop/coursework/models ~/rf_ws/src/chess_baxter
-```
-
-## Make exectutable
-
-```bash
-chmod +x ~/rf_ws/src/chess_baxter/src/spawn_chessboard.py
-chmod +x ~/rf_ws/src/chess_baxter/src/delete_chessgame.py
-```
-
-## Make it
-
-```bash
-cd ~/rf_ws
-catkin_make
 ```
