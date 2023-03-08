@@ -61,7 +61,7 @@ catkin_make
 
 ### Steps
 
-inspect [pick_and_place_moveit.py][file://Desktop/RFLabs/lab4/src/lab4_pkg/src/]
+inspect [pick_and_place_moveit.py](file://Desktop/RFLabs/lab4/src/lab4_pkg/src/)
 
 
 
