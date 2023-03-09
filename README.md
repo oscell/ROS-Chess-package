@@ -4,7 +4,7 @@ This is a robotics foundations coursework. The files can be found [here](https:/
 
 ## Git pull
 ```
-cd ~/rf_ws/src/
+cd ~/rf_ws/src/chess_baxter/
 git pull
 ```
 
