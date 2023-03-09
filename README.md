@@ -37,9 +37,16 @@ rosrun chess_baxter spawn_chessboard.py
 
 ### Listener
 
-This should output the positions of the 
+This should output the positions of the head with refference to origin (\base rostopic)
 ```sh
 rosrun chess_baxter tf_listener.py
+```
+
+To  find more possible [rostopics](http://wiki.ros.org/rostopic) type
+
+```
+rostopic info tf
+
 ```
 
 ### Pick and place
