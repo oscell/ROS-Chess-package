@@ -14,13 +14,20 @@ roslaunch baxter_gazebo baxter_world.launch
 
 ```bash
 rosrun baxter_tools enable_robot.py -e
+rosrun baxter_interface joint_trajectory_action_server.py
+```
+
+### Terminal 3:
+
+```sh
 roslaunch baxter_moveit_config baxter_grippers.launch
 ```
 
-### terminal 4
+### Terminal 4:
 
-```bash
+```sh
 rosrun chess_baxter spawn_chessboard.py
+rosrun chess_baxter pick_and_place_moveit.py
 ```
 
 ### terminal 5
