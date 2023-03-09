@@ -27,10 +27,22 @@ roslaunch baxter_moveit_config baxter_grippers.launch
 
 ```sh
 rosrun chess_baxter spawn_chessboard.py
+```
+
+### Listener
+
+This should output the positions of the 
+```sh
+rosrun chess_baxter tf_listener.py
+```
+
+### Pick and place
+
+```sh
 rosrun chess_baxter pick_and_place_moveit.py
 ```
 
-### terminal 5
+### Delete Board
 
 ```bash
 rosrun chess_baxter delete_chess_game.py
