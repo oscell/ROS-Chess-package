@@ -62,7 +62,7 @@ if __name__ == '__main__':
             piece_positionmap[str(row)+str(col)] = [pose.position.x, pose.position.y, pose.position.z-0.93] #0.93 to compensate Gazebo RViz origin difference
             if piece in list_pieces:
                 piece_names.append("%s%d" % (piece,col))
-
+    
     rospy.set_param('board_setup', board_setup) # Board setup
     rospy.set_param('list_pieces', list_pieces) # List of unique pieces
     rospy.set_param('piece_target_position_map', piece_positionmap) # 3D positions for each square in the chessboard
