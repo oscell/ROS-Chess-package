@@ -10,26 +10,26 @@ git pull
 
 ## Launch
 
-### terminal 1
+terminal 1
 
 ```bash
 roslaunch baxter_gazebo baxter_world.launch
 ```
 
-### terminal 2
+terminal 2
 
 ```bash
 rosrun baxter_tools enable_robot.py -e
 rosrun baxter_interface joint_trajectory_action_server.py
 ```
 
-### Terminal 3:
+terminal 3:
 
 ```sh
 roslaunch baxter_moveit_config baxter_grippers.launch
 ```
 
-### Terminal 4:
+terminal 4:
 
 ```sh
 rosrun chess_baxter spawn_chessboard.py
