@@ -46,7 +46,13 @@ To  find more possible [rostopics](http://wiki.ros.org/rostopic) type
 
 ```
 rostopic info tf
+```
 
+### Broadcaster
+Taken from [here](http://wiki.ros.org/tf/Tutorials/Writing%20a%20tf%20broadcaster%20%28Python%29), this should output the position of the block.
+
+```
+rosrun chess_baxter gazebo2tfframe.py
 ```
 
 ### Pick and place
