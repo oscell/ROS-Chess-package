@@ -109,6 +109,13 @@ class PickAndPlaceMoveIt(object):
         # retract to clear object
         self._retract()
 
+    def wait(self):
+        # go to the position
+        self._servo_to_pose(Pose(
+        position=Point(x=0.5, y=0.5, z=0.3),
+        orientation=Quaternion(x=-0.0249590815779, y=0.999649402929, z=0.00737916180073, w=0.00486450832011)))
+
+
     def place(self, pose):
         # servo above pose
         self._approach(pose)
@@ -119,10 +126,12 @@ class PickAndPlaceMoveIt(object):
         # retract to clear object
         self._retract()
 
+    
+
 
 def load_gazebo_models(table_pose=Pose(position=Point(x=1.0, y=0.0, z=0.0)),
                        table_reference_frame="world",
-                       block_pose=Pose(position=Point(x=0.68, y=0.11, z=0.7825)),
+                       block_pose=Pose(position=Point(x=0.6, y=0.6, z=0.7825)),
                        block_reference_frame="world"):
     # Get Models' Path
     model_path = rospkg.RosPack().get_path('baxter_sim_examples')+"/models/"
@@ -160,12 +169,40 @@ def delete_gazebo_models():
         delete_model("cafe_table")
         delete_model("block")
     except rospy.ServiceException, e:
-        rospy.loginfo("Delete Model service call failed: {0}".format(e))
+        rospy.loginfo("Delete Model service call failed: {0}".format(e))    
+
+def load_new(block_pose=Pose(position=Point(x=0.6, y=0.6, z=0.7825)),
+                       block_reference_frame="world"):
+    # Get Models' Path
+    model_path = rospkg.RosPack().get_path('chess_baxter')+"/models/"
+    # Load block SDF
+    block_xml = ''
+    with open(model_path + "b.sdf", "r") as block_file:
+        block_xml = block_file.read().replace('\n', '')
+        # Spawn block SDF
+    rospy.wait_for_service('/gazebo/spawn_sdf_model')
+    try:
+        spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
+        spawn_sdf("b", block_xml, "/", block_pose, block_reference_frame)
+    except rospy.ServiceException, e:
+        rospy.logerr("Spawn SDF service call failed: {0}".format(e))
 
 
 def main():
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node("ik_pick_and_place_moveit")
+    
+    limb = 'left'
+    hover_distance = 0.15  # meters
+    # An orientation for gripper fingers to be overhead and parallel to the obj
+    overhead_orientation = Quaternion(x=-0.0249590815779, y=0.999649402929, z=0.00737916180073, w=0.00486450832011)
+    # NOTE: Gazebo and Rviz has different origins, even though they are connected. For this
+    # we need to compensate for this offset which is 0.93 from the ground in gazebo to
+    # the actual 0, 0, 0 in Rviz.
+    starting_pose = Pose(
+        position=Point(x=0.6, y=0.6, z=0.35),
+        orientation=overhead_orientation)
+    pnp = PickAndPlaceMoveIt(limb, hover_distance)
 
     # Load Gazebo Models via Spawning Services
     # Note that the models reference is the /world frame
@@ -177,18 +214,10 @@ def main():
     # Wait for the All Clear from emulator startup
     rospy.wait_for_message("/robot/sim/started", Empty)
 
-    limb = 'left'
-    hover_distance = 0.15  # meters
+    
 
-    # An orientation for gripper fingers to be overhead and parallel to the obj
-    overhead_orientation = Quaternion(x=-0.0249590815779, y=0.999649402929, z=0.00737916180073, w=0.00486450832011)
-    # NOTE: Gazebo and Rviz has different origins, even though they are connected. For this
-    # we need to compensate for this offset which is 0.93 from the ground in gazebo to
-    # the actual 0, 0, 0 in Rviz.
-    starting_pose = Pose(
-        position=Point(x=0.7, y=0.135, z=0.35),
-        orientation=overhead_orientation)
-    pnp = PickAndPlaceMoveIt(limb, hover_distance)
+    
+    
 
     block_poses = list()
     # The Pose of the block in its initial location.
@@ -199,14 +228,24 @@ def main():
     # to command MoveIt! to go below because the table is 74 cm height.
     # Since the offset is 0.93, we just simply need to substract
     # 0.74 - 0.93 = -0.15 in Z
+    #load_new
+
+    #setting z to 0 just to it pauses above the block
     block_poses.append(Pose(
-        position=Point(x=0.7, y=0.135, z=-0.14),
+        position=Point(x=0.615, y=0.615, z=-0.14),
         orientation=overhead_orientation))
-    # Feel free to add additional desired poses for the object.
-    # Each additional pose will get its own pick and place.
+
     block_poses.append(Pose(
-        position=Point(x=0.7, y=-0.135, z=-0.14),
+        position=Point(x=0.3, y=0.4, z=-0.14),
         orientation=overhead_orientation))
+
+    block_poses.append(Pose(
+        position=Point(x=0.615, y=0.615, z=-0.14),
+        orientation=overhead_orientation))
+
+    block_poses.append(Pose(
+        position=Point(x=0.4, y=0.3, z=-0.14),
+        orientation=overhead_orientation)) 
 
     # Move to the desired starting angles
     pnp.move_to_start(starting_pose)
@@ -214,11 +253,15 @@ def main():
     while not rospy.is_shutdown():
         print("\nPicking...")
         pnp.pick(block_poses[idx])
+        print("\nTo Wait")
+        pnp.wait()
         print("\nPlacing...")
         idx = (idx+1) % len(block_poses)
         pnp.place(block_poses[idx])
+        print("\nSpawning new black...")
+        load_new()
+        idx = (idx+1) % len(block_poses)
     return 0
-
 
 if __name__ == '__main__':
     sys.exit(main())
