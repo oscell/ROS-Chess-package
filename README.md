@@ -2,6 +2,12 @@
 
 This is a robotics foundations coursework. The files can be found [here](https://moodle.gla.ac.uk/course/view.php?id=34588)
 
+## Git pull
+```
+cd ~/rf_ws/src/
+git pull
+```
+
 ## Launch
 
 ### terminal 1
