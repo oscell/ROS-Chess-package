@@ -2,10 +2,11 @@
 
 This is a robotics foundations coursework. The files can be found [here](https://moodle.gla.ac.uk/course/view.php?id=34588)
 
-## Git pull
+## Git pull and code
 ```
 cd ~/rf_ws/src/chess_baxter/
 git pull
+code .
 ```
 
 ## Launch
