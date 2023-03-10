@@ -68,6 +68,10 @@ rosrun chess_baxter pick_and_place_moveit.py
 rosrun chess_baxter delete_chess_game.py
 ```
 
+### Flow chart
+
+![image](https://user-images.githubusercontent.com/82882938/224342808-c0500f92-1435-4d2e-b013-f0fc948d41c2.png)
+
 ## Create package
 
 ```bash
