@@ -5,8 +5,12 @@ This is a robotics foundations coursework. The files can be found [here](https:/
 ## Git pull and code
 ```
 cd ~/rf_ws/src/chess_baxter/
-git pull
 code .
+```
+
+```
+cd ~/rf_ws/src/chess_baxter/
+git pull
 ```
 
 ## Launch
