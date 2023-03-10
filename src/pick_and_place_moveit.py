@@ -312,6 +312,8 @@ def main():
         pnp.place(block_poses[idx])
         pnp.wait()
 
+        
+
     return 0
 
 if __name__ == '__main__':
