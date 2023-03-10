@@ -23,8 +23,4 @@ if __name__ == '__main__':
 
     delete_model("cafe_table")
     delete_model("chessboard")
-    delete_model("b0")
-    delete_model("b1")
-    delete_model("r0")
-    delete_model("r1")
 

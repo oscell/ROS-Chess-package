@@ -25,9 +25,10 @@ import moveit_commander
 
 
 class PickAndPlaceMoveIt(object):
-    def __init__(self, limb, hover_distance=0.2, verbose=True):
+    def __init__(self, limb, hover_distance=0.2, verbose=True, attack_distance=0.2):
         self._limb_name = limb  # string
         self._hover_distance = hover_distance  # in meters
+        self._attack_distance = attack_distance
         self._verbose = verbose  # bool
         self._limb = baxter_interface.Limb(limb)
         self._gripper = baxter_interface.Gripper(limb)
@@ -69,6 +70,39 @@ class PickAndPlaceMoveIt(object):
         approach = copy.deepcopy(pose)
         # approach with a pose the hover-distance above the requested pose
         approach.position.z = approach.position.z + self._hover_distance
+
+        self._group.set_pose_target(approach)
+        plan = self._group.plan()
+        self._group.execute(plan)
+
+    def _xapproach(self, pose):
+        approach = copy.deepcopy(pose)
+        # approach with a pose the hover-distance above the requested pose
+        approach.position.x = approach.position.x + self._hover_distance
+        approach.position.x = approach.position.x - self._attack_distance
+
+
+        self._group.set_pose_target(approach)
+        plan = self._group.plan()
+        self._group.execute(plan)
+
+    def __yapproach(self, pose):
+        approach = copy.deepcopy(pose)
+        # approach with a pose the hover-distance above the requested pose
+        approach.position.y = approach.position.y + self._hover_distance
+        approach.position.y = approach.position.y - self._attack_distance
+
+
+        self._group.set_pose_target(approach)
+        plan = self._group.plan()
+        self._group.execute(plan)
+
+    def __approach(self, pose):
+        approach = copy.deepcopy(pose)
+        # approach with a pose the hover-distance above the requested pose
+        approach.position.x = approach.position.x - self._hover_distance
+        approach.position.x = approach.position.x + self._attack_distance
+
 
         self._group.set_pose_target(approach)
         plan = self._group.plan()
@@ -125,6 +159,39 @@ class PickAndPlaceMoveIt(object):
         self.gripper_open()
         # retract to clear object
         self._retract()
+
+    def attack_place(self, pose):
+        self._xapproach(pose)
+        #flick
+        # servo to pose
+        self._servo_to_pose(pose)
+        # open the gripper
+        self.gripper_open()
+        # retract to clear object
+        self._retract()
+
+    def battack_place(self, pose):
+        self.__approach(pose)
+        #flick
+        # servo to pose
+        self._servo_to_pose(pose)
+        # open the gripper
+        self.gripper_open()
+        # retract to clear object
+        self._retract()
+
+    def yplace(self,pose):
+        self.__yapproach(pose)
+        #flick
+        # servo to pose
+        self._servo_to_pose(pose)
+        # open the gripper
+        self.gripper_open()
+        # retract to clear object
+        self._retract()
+
+    def pause(self,pose):
+        self._servo_to_pose(pose)
 
     
 
@@ -197,8 +264,6 @@ def main():
     # Note that the models reference is the /world frame
     # and the IK operates with respect to the /base frame
     load_gazebo_models()
-    # Remove models from the scene on shutdown
-    rospy.on_shutdown(delete_gazebo_models)
 
     # Wait for the All Clear from emulator startup
     rospy.wait_for_message("/robot/sim/started", Empty)
@@ -219,230 +284,191 @@ def main():
     # 0.74 - 0.93 = -0.15 in Z
     #load_new
 
-    position = rospy.get_param("piece_target_position_map")
 
-    start = Point(x=0.6, y=0.6, z=-0.14)
-
-    #setting z to 0 just to it pauses above the block
-    block_poses.append(Pose(
-        position=start,
-        orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=Point(position['05'][0], position['05'][1], position['05'][2]),
-        orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=start,
-        orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=Point(position['02'][0], position['02'][1], position['02'][2]),
-        orientation=overhead_orientation)) 
-
-    block_poses.append(Pose(
-        position=start,
-        orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=Point(position['00'][0], position['00'][1], position['00'][2]),
-        orientation=overhead_orientation))
-        ##r0 in corect poistion
-
-    block_poses.append(Pose(
-        position=start,
-        orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=Point(position['07'][0], position['07'][1], position['07'][2]),
-        orientation=overhead_orientation)) 
-
-    ########White pieces are now set up
-
-    ####
-
-    ########Now set up black pieces
-
-    block_poses.append(Pose(
-    position=start,
-    orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=Point(position['75'][0], position['75'][1], position['75'][2]),
-        orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=start,
-        orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=Point(position['72'][0], position['72'][1], position['72'][2]),
-        orientation=overhead_orientation)) 
-
-    block_poses.append(Pose(
-        position=start,
-        orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=Point(position['70'][0], position['70'][1], position['70'][2]),
-        orientation=overhead_orientation))
-        ##r0 in corect poistion
-
-    block_poses.append(Pose(
-        position=start,
-        orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=Point(position['77'][0], position['77'][1], position['77'][2]),
-        orientation=overhead_orientation)) 
-    #
-    #
-    #
-    #
-    #####BOARD IS NOW SET
-    #
-    #
-    #
-    #
-
-    #WHITE ROOK TAKES BLACK ROOK
-    block_poses.append(Pose(
-    position=Point(position['00'][0], position['00'][1], position['00'][2]),
-    orientation=overhead_orientation))
-
-    block_poses.append(Pose(
-        position=Point(position['70'][0], position['70'][1], position['70'][2]),
-        orientation=overhead_orientation))
 
     # Move to the desired starting angles
     pnp.move_to_start(starting_pose)
     idx = 0
+    position = rospy.get_param("piece_target_position_map")
     
+    #####White Pieces
+        
+    #white bishop
+    print("\nSpawning white bishop...")
+    load_new("b.sdf", "b2", Pose(position=Point(position['05'][0], position['05'][1], 0.79)))
+    
+
+    #white bishop
+
+    print("\nSpawning white bishop...")
+    load_new("b.sdf", "b5", Pose(position=Point(position['02'][0], position['02'][1], 0.79)))
+    
+
+    #white rook
+
+    print("\nSpawning white rook...")
+    load_new("r.sdf", "r0", Pose(position=Point(position['00'][0], position['00'][1], 0.79)))
+    
+    #white rook
+
+    print("\nSpawning white rook...")
+    load_new("r.sdf", "r7", Pose(position=Point(position['07'][0], position['07'][1], 0.79)))
+    
+
+#####Black pieces
+
+    #black bishop
+
+    print("\nSpawning black bishop...")
+    load_new("B.sdf", "B2", Pose(position=Point(position['75'][0], position['75'][1], 0.79)))
+
+    #black bishop
+
+    print("\nSpawning black bishop...")
+    load_new("B.sdf", "B5", Pose(position=Point(position['72'][0], position['72'][1], 0.79)))
+
+    #black rook
+
+    print("\nSpawning black rook...")
+    load_new("R.sdf", "R0", Pose(position=Point(position['70'][0], position['70'][1], 0.79)))
+
+    #black rook
+
+    print("\nSpawning Black rook...")
+    load_new("R.sdf", "R7", Pose(position=Point(position['77'][0], position['77'][1], 0.79)))
+
+
+    
+
+    #setting z to 0 just to it pauses above the block
+
+    #WHITE ROOK TAKES BLACK ROOK
+    #PICK
+    block_poses.append(Pose(
+    position=Point(position['00'][0], position['00'][1], position['00'][2]),
+    orientation=overhead_orientation))
+
+    #PLACE
+    block_poses.append(Pose(
+        position=Point(position['70'][0], position['70'][1], position['70'][2]),
+        orientation=overhead_orientation))
+
+
+    #MOVE BISHOP
+    #PICK
+    block_poses.append(Pose(
+        position=Point(position['72'][0], position['72'][1], position['72'][2]),
+        orientation=overhead_orientation))
+
+    #PLACE
+    block_poses.append(Pose(
+        position=Point((position['51'][0]+position['71'][0])/2, position['51'][1], position['51'][2]),
+        orientation=overhead_orientation))
+
+    #ROOK ATTACK BISHOP
+    #PICK
+    block_poses.append(Pose(
+        position=Point(position['70'][0], position['70'][1], position['70'][2]),
+        orientation=overhead_orientation))
+
+    #PAUSE
+    block_poses.append(Pose(
+        position=Point(position['55'][0], position['55'][1], position['55'][2]),
+        orientation=overhead_orientation))
+
+    #PLACE
+    block_poses.append(Pose(
+        position=Point(position['75'][0], position['75'][1], position['75'][2]),
+        orientation=overhead_orientation))
+
+    #BISHOP ATTACK ROOK
+    #PICK
+    block_poses.append(Pose(
+        position=Point((position['51'][0]+position['71'][0])/2, position['51'][1], position['51'][2]),
+        orientation=overhead_orientation))
+
+    #PAUSE
+    block_poses.append(Pose(
+        position=Point(position['07'][0]+0.1, position['07'][1], position['07'][2]),
+        orientation=overhead_orientation))
+
+    #PLACE
+    block_poses.append(Pose(
+        position=Point(position['07'][0], position['07'][1], position['07'][2]),
+        orientation=overhead_orientation))
+
+    #ROOK ATTACK ROOK
+    #PICK
+    block_poses.append(Pose(
+        position=Point(position['75'][0], position['75'][1], position['75'][2]),
+        orientation=overhead_orientation))
+
+    #PLACE
+    block_poses.append(Pose(
+        position=Point(position['77'][0], position['77'][1], position['77'][2]),
+        orientation=overhead_orientation))
+
     while not rospy.is_shutdown():
 
-        #####White Pieces
         
-        #white bishop
-        print("\nSpawning white bishop...")
-        load_new("b.sdf", "b2")
-        print("\nPicking...")
-        pnp.pick(block_poses[idx])
-        print("\nTo Wait")
-        pnp.wait()
-        idx = (idx+1)
-        print("\nPlacing...")
-        pnp.place(block_poses[idx])
-        pnp.wait()
-
-        #white bishop
-        idx = (idx+1)
-        print("\nSpawning white bishop...")
-        load_new("b.sdf", "b5")
-        print("\nPicking...")
-        pnp.pick(block_poses[idx])
-        print("\nTo Wait")
-        pnp.wait()
-        print("\nPlacing...")
-        idx = (idx+1)
-        pnp.place(block_poses[idx])
-        pnp.wait()
-
-        #white rook
-        idx = (idx+1)
-        print("\nSpawning white rook...")
-        load_new("r.sdf", "r0")
-        print("\nPicking...")
-        pnp.pick(block_poses[idx])
-        print("\nTo Wait")
-        pnp.wait()
-        print("\nPlacing...")
-        idx = (idx+1)
-        pnp.place(block_poses[idx])
-        pnp.wait()
-
-        #white rook
-        idx = (idx+1)
-        print("\nSpawning white rook...")
-        load_new("r.sdf", "r7")
-        print("\nPicking...")
-        pnp.pick(block_poses[idx])
-        print("\nTo Wait")
-        pnp.wait()
-        print("\nPlacing...")
-        idx = (idx+1)
-        pnp.place(block_poses[idx])
-        pnp.wait()
-
-        #####Black pieces
-
-        #black bishop
-        idx = (idx+1)
-        print("\nSpawning black bishop...")
-        load_new("B.sdf", "B2")
-        print("\nPicking...")
-        pnp.pick(block_poses[idx])
-        print("\nTo Wait")
-        pnp.wait()
-        idx = (idx+1)
-        print("\nPlacing...")
-        pnp.place(block_poses[idx])
-        pnp.wait()
-
-        #black bishop
-        idx = (idx+1)
-        print("\nSpawning black bishop...")
-        load_new("B.sdf", "B5")
-        print("\nPicking...")
-        pnp.pick(block_poses[idx])
-        print("\nTo Wait")
-        pnp.wait()
-        print("\nPlacing...")
-        idx = (idx+1)
-        pnp.place(block_poses[idx])
-        pnp.wait()
-
-        #black rook
-        idx = (idx+1)
-        print("\nSpawning black rook...")
-        load_new("R.sdf", "R0")
-        print("\nPicking...")
-        pnp.pick(block_poses[idx])
-        print("\nTo Wait")
-        pnp.wait()
-        print("\nPlacing...")
-        idx = (idx+1)
-        pnp.place(block_poses[idx])
-        pnp.wait()
-
-        #black rook
-        idx = (idx+1)
-        print("\nSpawning Black rook...")
-        load_new("R.sdf", "R7", )
-        print("\nPicking...")
-        pnp.pick(block_poses[idx])
-        print("\nTo Wait")
-        pnp.wait()
-        print("\nPlacing...")
-        idx = (idx+1)
-        pnp.place(block_poses[idx])
-        pnp.wait()
-
         #wHITE ROOK TO BLACK ROOK
-        idx = (idx+1)
-        print("\nSpawning Black rook...")
-        load_new("R.sdf", "R7")
         print("\nPicking...")
         pnp.pick(block_poses[idx])
+        idx = (idx+1)
+        print("\nPlacing...")
+        pnp.attack_place(block_poses[idx])
         print("\nTo Wait")
         pnp.wait()
-        print("\nPlacing...")
+
+        #MOVE BISHOP
         idx = (idx+1)
+        print("\nPicking...")
+        pnp.pick(block_poses[idx])
+        idx = (idx+1)
+        print("\nPlacing...")
         pnp.place(block_poses[idx])
+        print("\nTo Wait")
         pnp.wait()
+
+        #ROOK TO BISHOP
+        idx = (idx+1)
+        print("\nPicking...")
+        pnp.pick(block_poses[idx])
+        idx = (idx+1)
+        print("\nPausing...")
+        pnp.pause(block_poses[idx])
+        idx = (idx+1)
+        print("\nPlacing...")
+        pnp.attack_place(block_poses[idx])
+        print("\nTo Wait")
+        pnp.wait()
+
+        #BISHOP TO ROOK
+        idx = (idx+1)
+        print("\nPicking...")
+        pnp.pick(block_poses[idx])
+        idx = (idx+1)
+        print("\nPausing...")
+        pnp.pause(block_poses[idx])
+        idx = (idx+1)
+        print("\nPlacing...")
+        pnp.battack_place(block_poses[idx])
+        print("\nTo Wait")
+        pnp.wait()
+
+        #ROOK ATTACK ROOK
+        idx = (idx+1)
+        print("\nPicking...")
+        pnp.pick(block_poses[idx])
+        idx = (idx+1)
+        print("\nPlacing...")
+        pnp.yplace(block_poses[idx])
+        print("\nTo Wait")
+        pnp.wait()
+
 
         break
-
     return 0
 
 if __name__ == '__main__':
-    sys.exit(main())
+    main()
