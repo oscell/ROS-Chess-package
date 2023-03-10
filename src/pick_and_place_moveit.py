@@ -139,22 +139,11 @@ def load_gazebo_models(table_pose=Pose(position=Point(x=1.0, y=0.0, z=0.0)),
     table_xml = ''
     with open(model_path + "cafe_table/model.sdf", "r") as table_file:
         table_xml = table_file.read().replace('\n', '')
-    # Load block SDF
-    block_xml = ''
-    with open(model_path + "block/model.sdf", "r") as block_file:
-        block_xml = block_file.read().replace('\n', '')
     # Spawn Table SDF
     rospy.wait_for_service('/gazebo/spawn_sdf_model')
     try:
         spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
         spawn_sdf("cafe_table", table_xml, "/", table_pose, table_reference_frame)
-    except rospy.ServiceException, e:
-        rospy.logerr("Spawn SDF service call failed: {0}".format(e))
-    # Spawn block SDF
-    rospy.wait_for_service('/gazebo/spawn_sdf_model')
-    try:
-        spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
-        spawn_sdf("block", block_xml, "/", block_pose, block_reference_frame)
     except rospy.ServiceException, e:
         rospy.logerr("Spawn SDF service call failed: {0}".format(e))
 
@@ -172,19 +161,18 @@ def delete_gazebo_models():
     except rospy.ServiceException, e:
         rospy.loginfo("Delete Model service call failed: {0}".format(e))    
 
-def load_new(block_pose=Pose(position=Point(x=0.6, y=0.6, z=0.7825)),
-                       block_reference_frame="world"):
+def load_new(piece, name, block_pose=Pose(position=Point(x=0.6, y=0.6, z=0.7825))):
     # Get Models' Path
     model_path = rospkg.RosPack().get_path('chess_baxter')+"/models/"
     # Load block SDF
     block_xml = ''
-    with open(model_path + "b.sdf", "r") as block_file:
+    with open(model_path + piece, "r") as block_file:
         block_xml = block_file.read().replace('\n', '')
         # Spawn block SDF
     rospy.wait_for_service('/gazebo/spawn_sdf_model')
     try:
         spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
-        spawn_sdf("b", block_xml, "/", block_pose, block_reference_frame)
+        spawn_sdf(name, block_xml, "/", block_pose, "world")
     except rospy.ServiceException, e:
         rospy.logerr("Spawn SDF service call failed: {0}".format(e))
 
@@ -231,37 +219,99 @@ def main():
     # 0.74 - 0.93 = -0.15 in Z
     #load_new
 
+    position = rospy.get_param("piece_target_position_map")
+
     #setting z to 0 just to it pauses above the block
     block_poses.append(Pose(
-        position=Point(x=0.615, y=0.615, z=-0.14),
+        position=Point(x=0.6, y=0.6, z=-0.14),
         orientation=overhead_orientation))
 
     block_poses.append(Pose(
-        position=Point(x=0.3, y=0.4, z=-0.14),
+        position=Point(position['05'][0], position['05'][1], position['05'][2]),
         orientation=overhead_orientation))
 
     block_poses.append(Pose(
-        position=Point(x=0.615, y=0.615, z=-0.14),
+        position=Point(x=0.6, y=0.6, z=-0.14),
         orientation=overhead_orientation))
 
     block_poses.append(Pose(
-        position=Point(x=0.4, y=0.3, z=-0.14),
+        position=Point(position['02'][0], position['02'][1], position['02'][2]),
+        orientation=overhead_orientation)) 
+
+    block_poses.append(Pose(
+        position=Point(x=0.6, y=0.6, z=-0.14),
+        orientation=overhead_orientation))
+
+    block_poses.append(Pose(
+        position=Point(position['00'][0], position['00'][1], position['00'][2]),
+        orientation=overhead_orientation))
+        ##r0 in corect poistion
+
+    block_poses.append(Pose(
+        position=Point(x=0.6, y=0.6, z=-0.14),
+        orientation=overhead_orientation))
+
+    block_poses.append(Pose(
+        position=Point(position['07'][0], position['07'][1], position['07'][2]),
         orientation=overhead_orientation)) 
 
     # Move to the desired starting angles
     pnp.move_to_start(starting_pose)
     idx = 0
+    
     while not rospy.is_shutdown():
+
+        print(position['05'])
+        print("\nSpawning white bishop...")
+        load_new("b.sdf", "b0")
+        print("\nPicking...")
+        pnp.pick(block_poses[idx])
+        print("\nTo Wait")
+        pnp.wait()
+        idx = (idx+1)
+        print("\nPlacing...")
+        pnp.place(block_poses[idx])
+        pnp.wait()
+
+
+        idx = (idx+1)
+        print("\nSpawning white bishop...")
+        load_new("b.sdf", "b1")
         print("\nPicking...")
         pnp.pick(block_poses[idx])
         print("\nTo Wait")
         pnp.wait()
         print("\nPlacing...")
-        idx = (idx+1) % len(block_poses)
+        idx = (idx+1)
         pnp.place(block_poses[idx])
-        print("\nSpawning new black...")
-        load_new()
-        idx = (idx+1) % len(block_poses)
+        pnp.wait()
+
+
+        idx = (idx+1)
+        print("\nSpawning white rook...")
+        load_new("r.sdf", "r0")
+        print("\nPicking...")
+        pnp.pick(block_poses[idx])
+        print("\nTo Wait")
+        pnp.wait()
+        print("\nPlacing...")
+        idx = (idx+1)
+        pnp.place(block_poses[idx])
+        pnp.wait()
+
+
+        idx = (idx+1)
+        print("\nSpawning white rook...")
+        load_new("r.sdf", "r1")
+        print("\nPicking...")
+        pnp.pick(block_poses[idx])
+        print("\nTo Wait")
+        pnp.wait()
+        print("\nPlacing...")
+        idx = (idx+1)
+        pnp.place(block_poses[idx])
+        pnp.wait()
+
     return 0
 
 if __name__ == '__main__':
