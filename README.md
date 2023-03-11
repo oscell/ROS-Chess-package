@@ -43,6 +43,9 @@ rosrun chess_baxter spawn_chessboard.py
 Terminal 5: Broadcaster
 
 To  find more possible [rostopics](http://wiki.ros.org/rostopic) type
+```
+rosrun ches_baxter gazebo2tfframe.py
+```
 
 This should output the positions of the head with refference to origin (\base rostopic)
 
