@@ -4,7 +4,7 @@ import tf
 from gazebo_msgs.msg import LinkStates
 
 # This is hard-coded to block for this exercise, yet you can make the script general by adding cmd line arguments
-input_linkname = "block"
+input_linkname = ["b2","b5","r0","r7","B2","B5","R0","R7"]
 
 # Global variable where the object's pose is stored
 pose = None
@@ -17,6 +17,7 @@ def get_links_gazebo(link_states_msg):
     poses = {'world': link_states_msg.pose[0]} # get world link
     for (link_idx, link_name) in enumerate(link_states_msg.name):
         modelname = link_name.split('::')[0]
+        
         if input_linkname == modelname:
             poses[modelname] = link_states_msg.pose[link_idx]
 
