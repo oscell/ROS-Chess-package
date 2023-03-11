@@ -42,24 +42,20 @@ rosrun chess_baxter spawn_chessboard.py
 
 Terminal 5: Broadcaster
 
-This should output the positions of the head with refference to origin (\base rostopic)
-```sh
-rosrun chess_baxter gazebo2tfframe.py
-```
-
 To  find more possible [rostopics](http://wiki.ros.org/rostopic) type
 
-```
-rostopic info tf
-```
+This should output the positions of the head with refference to origin (\base rostopic)
 
-
-
-
-### Pick and place
+Terminal 6: Place chess pieces
 
 ```sh
 rosrun chess_baxter pick_and_place_moveit.py
+```
+
+Terminal 7: Place chess pieces
+
+```sh
+rosrun chess_baxter play_chess
 ```
 
 ### Delete Board
