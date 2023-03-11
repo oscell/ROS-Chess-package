@@ -15,36 +15,36 @@ git pull
 
 ## Launch
 
-terminal 1
+terminal 1: Startup
 
 ```bash
 roslaunch baxter_gazebo baxter_world.launch
 ```
 
-terminal 2
+terminal 2: Enable and publish joint trajectories
 
 ```bash
 rosrun baxter_tools enable_robot.py -e
 rosrun baxter_interface joint_trajectory_action_server.py
 ```
 
-terminal 3:
+terminal 3: Enable grippers
 
 ```sh
 roslaunch baxter_moveit_config baxter_grippers.launch
 ```
 
-terminal 4:
+terminal 4: Spawn chesboard
 
 ```sh
 rosrun chess_baxter spawn_chessboard.py
 ```
 
-### Listener
+Terminal 5: Broadcaster
 
 This should output the positions of the head with refference to origin (\base rostopic)
 ```sh
-rosrun chess_baxter tf_listener.py
+rosrun chess_baxter gazebo2tfframe.py
 ```
 
 To  find more possible [rostopics](http://wiki.ros.org/rostopic) type
@@ -53,12 +53,8 @@ To  find more possible [rostopics](http://wiki.ros.org/rostopic) type
 rostopic info tf
 ```
 
-### Broadcaster
-Taken from [here](http://wiki.ros.org/tf/Tutorials/Writing%20a%20tf%20broadcaster%20%28Python%29), this should output the position of the block.
 
-```
-rosrun chess_baxter gazebo2tfframe.py
-```
+
 
 ### Pick and place
 
