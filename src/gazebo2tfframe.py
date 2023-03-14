@@ -4,7 +4,8 @@ import tf
 from gazebo_msgs.msg import LinkStates
 
 # This is hard-coded to block for this exercise, yet you can make the script general by adding cmd line arguments
-input_linkname = ["b2","b5","r0","r7","B2","B5","R0","R7"]
+input_linknames = ["b2","b5","r0","r7","B2","B5","R0","R7"]
+# input_linkname = None
 
 # Global variable where the object's pose is stored
 pose = None
@@ -20,13 +21,11 @@ def get_links_gazebo(link_states_msg):
         
         if input_linkname == modelname:
             poses[modelname] = link_states_msg.pose[link_idx]
-
     pose = poses[input_linkname]
 
 
 def main():
     rospy.init_node('gazebo2tfframe')
-
     # Create TF broadcaster -- this will publish a frame give a pose
     tfBroadcaster = tf.TransformBroadcaster()
     # SUbscribe to Gazebo's topic where all links and objects poses within the simulation are published
@@ -36,13 +35,16 @@ def main():
     global pose
     rate = rospy.Rate(20)
     while not rospy.is_shutdown():
-        if pose is not None:
-            pos = pose.position
-            ori = pose.orientation
-            rospy.loginfo(pos)
-            # Publish transformation given in pose
-            tfBroadcaster.sendTransform((pos.x, pos.y, pos.z - 0.93), (ori.x, ori.y, ori.z, ori.w), rospy.Time.now(), input_linkname, 'world')
-            rate.sleep()
+        for i in input_linknames:
+            global input_linkname
+            input_linkname = i
+            if pose is not None:
+                pos = pose.position
+                ori = pose.orientation
+                rospy.loginfo(pos)
+                # Publish transformation given in pose
+                tfBroadcaster.sendTransform((pos.x, pos.y, pos.z - 0.93), (ori.x, ori.y, ori.z, ori.w), rospy.Time.now(), input_linkname, 'world')
+                rate.sleep()
 
     rospy.spin()
 

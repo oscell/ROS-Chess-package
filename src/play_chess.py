@@ -400,12 +400,12 @@ def main():
     #ROOK ATTACK ROOK
     #PICK
     block_poses.append(Pose(
-        position=Point(position['75'][0], position['75'][1], position['75'][2]),
+        position=Point(position['77'][0], position['77'][1], position['77'][2]),
         orientation=overhead_orientation))
 
     #PLACE
     block_poses.append(Pose(
-        position=Point(position['77'][0], position['77'][1], position['77'][2]),
+        position=Point(position['75'][0], position['75'][1], position['75'][2]),
         orientation=overhead_orientation))
 
     while not rospy.is_shutdown():
@@ -462,7 +462,7 @@ def main():
         pnp.pick(block_poses[idx])
         idx = (idx+1)
         print("\nPlacing...")
-        pnp.yplace(block_poses[idx])
+        pnp.attack_place(block_poses[idx])
         print("\nTo Wait")
         pnp.wait()
 
