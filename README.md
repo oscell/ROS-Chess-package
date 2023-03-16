@@ -62,7 +62,7 @@ rosrun chess_baxter delete_chess_game.py
 
 ![image](https://user-images.githubusercontent.com/82882938/224342808-c0500f92-1435-4d2e-b013-f0fc948d41c2.png)
 
-## Create package
+<!-- ## Create package
 
 ```bash
 cd ~/rf_ws/src
@@ -89,4 +89,4 @@ chmod +x ~/rf_ws/src/chess_baxter/src/delete_chessgame.py
 ```bash
 cd ~/rf_ws
 catkin_make
-```
+``` -->
