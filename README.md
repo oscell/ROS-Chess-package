@@ -4,6 +4,13 @@ This is a robotics foundations coursework. The files can be found [here](https:/
 
 **Rename the package to chess_baxter before launching**
 
+## Make it
+
+```bash
+cd ~/rf_ws
+catkin_make
+``
+
 ## Launch
 
 terminal 1: Startup
