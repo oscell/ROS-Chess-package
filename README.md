@@ -9,8 +9,7 @@ This is a robotics foundations coursework. The files can be found [here](https:/
 ```bash
 cd ~/rf_ws
 catkin_make
-``
-
+```
 ## Launch
 
 terminal 1: Startup
