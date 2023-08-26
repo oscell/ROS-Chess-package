@@ -8,10 +8,10 @@ The full solution utilizes ROS, Gazebo, RViz, and MoveIt. A demonstration video 
 
 :movie_camera: [Click here](https://www.youtube.com/watch?v=VA5hQQhipFk) to watch Baxter in action! :movie_camera:
 
-<img src="your-image-link" width="500">
+<img src="assets/images/Cover.png" width="300">
 
 </div>
-<video src="assets/Video/Chess%20Baxter%20-%20Made%20with%20Clipchamp.mp4" controls title="Title"></video>
+
 ## Overview
 
 Our approach to the problem was threefold:
@@ -23,10 +23,9 @@ Our approach to the problem was threefold:
 For a detailed breakdown of our approach, the challenges faced, and our proposed improvements, refer to the **Reflective Analysis** section below.
 
 ## Repository Contents
-- **[Courswork Description]()**
-- **[Video Demonstration](link-to-your-video)**: A visual showcase of Baxter completing the tasks.
-- **[ROS Package](link-to-zip-file)**: Contains the ROS package with all the source code.
-- **[Reflective Analysis](#reflective-analysis)**: Insights into our development process, challenges, and proposed enhancements.
+- **[Courswork Description](https://github.com/oscell/ROS-Chess-package/blob/master/assets/Documents/Courswork%20Description.pdf)**: Contains intructions and requirements for the coursework.
+- **[Video Demonstration](https://www.youtube.com/watch?v=VA5hQQhipFk)**: A visual showcase of Baxter completing the tasks.
+- **[ROS Package](https://github.com/oscell/ROS-Chess-package/tree/master/src)**: Contains the ROS package with all the source code.
 
 ## Setup & Installation
 
