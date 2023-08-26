@@ -26,6 +26,7 @@ For a detailed breakdown of our approach, the challenges faced, and our proposed
 - **[Courswork Description](https://github.com/oscell/ROS-Chess-package/blob/master/assets/Documents/Courswork%20Description.pdf)**: Contains intructions and requirements for the coursework.
 - **[Video Demonstration](https://www.youtube.com/watch?v=VA5hQQhipFk)**: A visual showcase of Baxter completing the tasks.
 - **[ROS Package](https://github.com/oscell/ROS-Chess-package/tree/master/src)**: Contains the ROS package with all the source code.
+- **[Chess Models](https://github.com/oscell/ROS-Chess-package/tree/master)**: All the `.sdf` models of chess board and peices.
 
 ## Setup & Installation
 
